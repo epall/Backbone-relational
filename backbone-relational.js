@@ -673,7 +673,11 @@
 			options = this.sanitizeOptions( options );
 			if ( !this.related.getByCid( model ) && !this.related.get( model ) ) {
 				// Check if this new model was specified in 'this.keyContents'
-				var item = _.any( this.keyContents, function( item ) {
+        var contents = this.keyContents;
+        if(contents instanceof Backbone.Collection){
+          contents = contents.models;
+        }
+				var item = _.any( contents, function( item ) {
 					var id = _.isString( item ) || _.isNumber( item ) ? item : item[ this.relatedModel.prototype.idAttribute ];
 					return id && id === model.id;
 				}, this );
